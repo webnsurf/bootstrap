@@ -1,7 +1,13 @@
+import path from 'path';
+
 import arg from 'arg';
 import inquirer, { QuestionCollection } from 'inquirer';
 
 import { RawArgs, InitialArguments, Options } from '../types';
+
+const sanitizeProjectName = (rawName?: string) => (
+  rawName && rawName.toLowerCase().replace(/\s+/g, '-')
+);
 
 const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
   try {
@@ -26,7 +32,7 @@ const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
     );
 
     return {
-      name: args._[0],
+      projectName: args._[0],
       skipPrompts: args['--yes'] || false,
       noBackend: args['--no-backend'] || false,
       noGit: args['--no-git'] || false,
@@ -45,25 +51,38 @@ const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
   }
 };
 
-const prompt = async (options: InitialArguments = {}): Promise<Options> => {
-  const path = process.cwd().split('/');
+const prompt = async ({
+  skipPrompts,
+  projectName,
+  noBackend,
+  noGit,
+  noRouter,
+  noLogin,
+  noAntd,
+  runInstall,
+}: InitialArguments = {}): Promise<Options> => {
+  const workingDirPath = process.cwd();
+  const workingDirArray = workingDirPath.split('/');
+  const workingDir = workingDirArray[workingDirArray.length - 1];
+
   const initialOptions: Options = {
-    name: options.name || path[path.length - 1],
-    withBackend: !options.noBackend,
-    withGit: !options.noGit,
-    withRouter: !options.noRouter,
-    withLogin: !options.noLogin,
-    withAntd: !options.noAntd,
-    withInstall: options.runInstall,
+    projectName: sanitizeProjectName(projectName || workingDir),
+    projectPath: projectName ? path.join(workingDirPath, projectName) : workingDirPath,
+    withBackend: !noBackend,
+    withGit: !noGit,
+    withRouter: !noRouter,
+    withLogin: !noLogin,
+    withAntd: !noAntd,
+    withInstall: runInstall,
   };
 
-  if (options.skipPrompts) {
+  if (skipPrompts) {
     return initialOptions;
   }
 
   const questions: QuestionCollection[] = [];
 
-  if (!options.noBackend) {
+  if (!noBackend) {
     questions.push({
       type: 'confirm',
       name: 'withBackend',
@@ -72,7 +91,7 @@ const prompt = async (options: InitialArguments = {}): Promise<Options> => {
     });
   }
 
-  if (!options.noGit) {
+  if (!noGit) {
     questions.push({
       type: 'confirm',
       name: 'withGit',
@@ -81,7 +100,7 @@ const prompt = async (options: InitialArguments = {}): Promise<Options> => {
     });
   }
 
-  if (!options.noRouter) {
+  if (!noRouter) {
     questions.push({
       type: 'confirm',
       name: 'withRouter',
@@ -90,7 +109,7 @@ const prompt = async (options: InitialArguments = {}): Promise<Options> => {
     });
   }
 
-  if (!options.noLogin) {
+  if (!noLogin) {
     questions.push({
       type: 'confirm',
       name: 'withLogin',
@@ -99,7 +118,7 @@ const prompt = async (options: InitialArguments = {}): Promise<Options> => {
     });
   }
 
-  if (!options.noAntd) {
+  if (!noAntd) {
     questions.push({
       type: 'confirm',
       name: 'withAntd',
@@ -108,7 +127,7 @@ const prompt = async (options: InitialArguments = {}): Promise<Options> => {
     });
   }
 
-  if (!options.runInstall) {
+  if (!runInstall) {
     questions.push({
       type: 'confirm',
       name: 'withInstall',

@@ -1,7 +1,7 @@
 export type RawArgs = string[];
 
 export interface InitialArguments {
-  name?: string;
+  projectName?: string;
   skipPrompts?: boolean;
   noBackend?: boolean;
   noGit?: boolean;
@@ -12,7 +12,8 @@ export interface InitialArguments {
 }
 
 export interface Options {
-  name: string;
+  projectName: string;
+  projectPath: string;
   withBackend: boolean;
   withGit: boolean;
   withRouter: boolean;
