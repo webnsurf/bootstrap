@@ -1,6 +1,8 @@
 import arg from 'arg';
 import inquirer, { QuestionCollection } from 'inquirer';
 
+import { RawArgs, InitialArguments, Options } from '../types';
+
 const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
   try {
     const args = arg(
@@ -24,6 +26,7 @@ const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
     );
 
     return {
+      name: args._[0],
       skipPrompts: args['--yes'] || false,
       noBackend: args['--no-backend'] || false,
       noGit: args['--no-git'] || false,
@@ -43,7 +46,9 @@ const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
 };
 
 const prompt = async (options: InitialArguments = {}): Promise<Options> => {
+  const path = process.cwd().split('/');
   const initialOptions: Options = {
+    name: options.name || path[path.length - 1],
     withBackend: !options.noBackend,
     withGit: !options.noGit,
     withRouter: !options.noRouter,
@@ -126,24 +131,3 @@ export const getOptions = async (rawArgs: RawArgs): Promise<Options> => {
 
   return options;
 };
-
-type RawArgs = string[];
-
-interface InitialArguments {
-  skipPrompts?: boolean;
-  noBackend?: boolean;
-  noGit?: boolean;
-  noRouter?: boolean;
-  noLogin?: boolean;
-  noAntd?: boolean;
-  runInstall?: boolean;
-}
-
-interface Options {
-  withBackend: boolean;
-  withGit: boolean;
-  withRouter: boolean;
-  withLogin: boolean;
-  withAntd: boolean;
-  withInstall: boolean;
-}
