@@ -5,6 +5,7 @@ import { Modal } from 'components/common';
 import { Button } from 'components/forms';
 
 export const MainPage: FC<RouteComponentProps> = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [word, setWord] = useState('');
 
   useEffect(() => {
@@ -16,11 +17,18 @@ export const MainPage: FC<RouteComponentProps> = () => {
       ....I...say....
       <div>{ word }</div>
 
+
       <Modal
         renderActions={ modal => <Button onClick={ modal.open }>Open modal</Button> }
         heading={ (
           <span>This is a<b>{ ' 😊 Modal 😊 ' }</b></span>
         ) }
+        onOpen={ () => {
+          setIsLoading(true);
+
+          setTimeout(() => setIsLoading(false), 1000);
+        } }
+        isLoading={ isLoading }
       >
         This in my content
         <br />

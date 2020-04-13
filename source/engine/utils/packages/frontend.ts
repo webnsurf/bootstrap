@@ -85,6 +85,8 @@ const withLogin = {
     'react-final-form': '^6.3.3',
     'react-redux': '^7.2.0',
     'redux': '^4.0.5',
+    'resize-observer-polyfill': '^1.5.1',
+    'throttle-debounce': '^2.1.0',
     'validator': '^11.1.0',
   },
   'devDependencies': {
@@ -92,6 +94,7 @@ const withLogin = {
     '@types/jsonwebtoken': '^8.3.5',
     '@types/validator': '^10.11.3',
     '@types/react-redux': '^7.1.7',
+    '@types/throttle-debounce': '^2.1.0',
   },
 };
 
@@ -116,12 +119,17 @@ const withGit = {
 const withAntd = {
   'dependencies': {
     'antd': '^4.1.2',
+    'resize-observer-polyfill': '^1.5.1',
+    'throttle-debounce': '^2.1.0',
+  },
+  'devDependencies': {
+    '@types/throttle-debounce': '^2.1.0',
   },
 };
 
 const withDocker = {
   'scripts': {
-    'run-dev': 'docker-compose up | sed -En "s/({{projectName}}-dev\\s*\\|\\s*(.*)|(Something))/\\2\\3/p"',
+    'run-dev': 'docker-compose up | sed -En "s/({{projectName}}-dev\\s*\\|\\s*(.*)|(Step| --->|Building|Removing|Creating|Successfully))/\\2\\3/p"',
     'build-dev': 'docker-compose up -d --build && npm run run-dev',
     'clean-dev': 'docker-compose down && npm run remove-images',
     'run-local': 'export ENVIRONMENT=local && ./docker/deploy.sh',
@@ -185,6 +193,10 @@ export const getFrontendPackage = (
       dependencies: {
         ...packageObject.dependencies,
         ...withAntd.dependencies,
+      },
+      devDependencies: {
+        ...packageObject.devDependencies,
+        ...withAntd.devDependencies,
       },
     };
   }

@@ -38,8 +38,6 @@ export const createFrontend = (
 
       if (withRouter) {
         folders.push(path.join(templatesPath, 'with-antd/with-router'));
-      } else {
-        folders.push(path.join(templatesPath, 'with-antd/simple'));
       }
 
       if (withLogin) {

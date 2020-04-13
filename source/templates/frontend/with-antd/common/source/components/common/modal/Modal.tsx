@@ -50,7 +50,13 @@ export class Modal extends Component<ModalProps, ModalState> {
   }
 
   open = () => {
+    const { onOpen } = this.props;
+
     this.setState({ isOpen: true });
+
+    if (onOpen) {
+      onOpen();
+    }
   }
 
   close = () => {
@@ -133,6 +139,7 @@ interface ModalProps {
   isOpen?: boolean;
   visible?: boolean;
   onClose?: () => void;
+  onOpen?: () => void;
   isLoading?: boolean;
   isClosable?: boolean;
   heading?: string | JSX.Element;

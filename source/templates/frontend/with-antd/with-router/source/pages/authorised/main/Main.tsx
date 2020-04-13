@@ -1,11 +1,12 @@
 import React, { FC, useState, useEffect } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { Modal } from 'components/common';
 import { Button } from 'components/forms';
 
-export const App: FC = () => {
-  const [word, setWord] = useState('');
+export const MainPage: FC<RouteComponentProps> = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [word, setWord] = useState('');
 
   useEffect(() => {
     setTimeout(() => setWord('😊 let\'s code! 😊'), 2000);
@@ -15,6 +16,7 @@ export const App: FC = () => {
     <div className="app">
       ....I...say....
       <div>{ word }</div>
+
 
       <Modal
         renderActions={ modal => <Button onClick={ modal.open }>Open modal</Button> }
