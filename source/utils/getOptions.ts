@@ -6,8 +6,8 @@ import inquirer, { QuestionCollection } from 'inquirer';
 import { RawArgs, InitialArguments, Options, InitialOptions, ServerOptions } from '../types';
 import { printError } from './printError';
 
-const sanitizeProjectName = (rawName?: string) => (
-  rawName && rawName.toLowerCase().replace(/\s+/g, '-')
+const sanitizeProjectName = (rawName: string) => (
+  rawName.toLowerCase().replace(/\s+/g, '-')
 );
 
 const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
@@ -29,7 +29,7 @@ const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
       '-p': '--pipeline',
       '-i': '--install',
     },
-    { argv: rawArgs.slice(2) }
+    { argv: rawArgs.slice(2) },
   );
 
   const designLibrary = (() => {
@@ -89,10 +89,10 @@ const prompt = async ({
     withGit: !noGit,
     withRouter: !noRouter,
     withLogin: !noLogin,
-    withDocker: withDocker || withPipeline,
-    withPipeline,
+    withDocker: !!withDocker || !!withPipeline,
+    withPipeline: !!withPipeline,
     designLibrary: designLibrary || null,
-    withInstall: runInstall,
+    withInstall: !!runInstall,
   };
 
   const serverOptions: ServerOptions = {
