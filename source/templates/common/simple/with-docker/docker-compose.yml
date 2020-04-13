@@ -4,7 +4,7 @@ services:
   {{projectName}}-dev:
     container_name: {{projectName}}-dev
     build:
-      context: frontend
+      context: .
       dockerfile: Dockerfile.dev
     tty: true
     image: {{projectName}}-dev:latest
