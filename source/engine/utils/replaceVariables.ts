@@ -7,7 +7,7 @@ export const replaceVariables = (
   let finalString = string;
 
   Object.keys(variables).forEach(variable => {
-    const variableRegexp = new RegExp(`{{${variable}}}`, 'g');
+    const variableRegexp = new RegExp(`\\/\\*\\s*{{${variable}}}\\s*\\*\\/|{{${variable}}}`, 'g');
     const variablevalue = variables[variable];
 
     finalString = finalString.replace(

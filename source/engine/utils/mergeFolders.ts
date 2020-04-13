@@ -1,13 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 import path from 'path';
 
 import fs from 'fs-extra';
 
 import { Variables } from '../../types';
 import { replaceVariables } from './replaceVariables';
+import { getFiles, getReusableFiles } from './general';
 
-const getFiles = (directoryPath: string) => (
-  fs.readdirSync(directoryPath)
-);
+const reusableFiles = getReusableFiles();
 
 export const mergeFolders = (
   foldersToMerge: string[],
@@ -31,10 +31,20 @@ export const mergeFolders = (
 
       const fileContents = fs.readFileSync(fullPath, 'utf8');
 
-      fs.writeFileSync(
-        fullDestinationPath,
-        replaceVariables(fileContents, variables),
-      );
+      try {
+        const { __template, __variables } = JSON.parse(fileContents);
+        const reusableFile = replaceVariables(
+          reusableFiles[__template],
+          __variables,
+        );
+
+        fs.writeFileSync(fullDestinationPath, reusableFile);
+      } catch (err) {
+        fs.writeFileSync(
+          fullDestinationPath,
+          replaceVariables(fileContents, variables),
+        );
+      }
     });
   };
 
