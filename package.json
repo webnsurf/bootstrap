@@ -7,8 +7,8 @@
     "start": "tsc --watch"
   },
   "bin": {
-    "@webnsurf/project-bootstrap": "bin/bootstrap.js",
-    "wns-strap": "bin/bootstrap.js"
+    "webnsurf-project-bootstrap": "bin/bootstrap.js",
+    "wns-new": "bin/bootstrap.js"
   },
   "publishConfig": {
     "access": "public"
