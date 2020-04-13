@@ -1,6 +1,6 @@
 import sortPackage from 'sort-package-json';
 
-import { Options } from '../../../types';
+import { Options, Variables } from '../../../types';
 import { replaceVariables } from '../replaceVariables';
 
 const common = {
@@ -64,7 +64,7 @@ const withGit = {
 
 export const getBackendPackage = (
   options: Pick<Options, 'withLogin' | 'withGit'>,
-  variables: { [key: string]: string },
+  variables: Variables,
 ) => {
   let packageObject = { ...common };
 

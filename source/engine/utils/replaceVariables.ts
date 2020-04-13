@@ -1,6 +1,8 @@
+import { Variables } from '../../types';
+
 export const replaceVariables = (
   string: string,
-  variables: { [key: string]: string },
+  variables: Variables,
 ) => {
   let finalString = string;
 

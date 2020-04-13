@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import path from 'path';
 
 import { getOptions } from './utils';
 import { createFrontend, createBackend } from './engine';
@@ -11,10 +12,11 @@ export const cli = async (args: string[]) => {
     console.log(`Creating project "${options.projectName}" with the following options:`);
     console.log(options);
 
-    createFrontend(options);
-
     if (options.withBackend) {
-      createBackend(options);
+      createBackend(options, path.join(options.projectPath, 'backend'));
+      createFrontend(options, path.join(options.projectPath, 'frontend'));
+    } else {
+      createFrontend(options, options.projectPath);
     }
   } catch (error) {
     if (error.code === 'ARG_UNKNOWN_OPTION') {

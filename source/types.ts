@@ -34,3 +34,8 @@ export interface ServerOptions {
 }
 
 export interface Options extends InitialOptions, ServerOptions {}
+
+export interface Variables {
+  projectName?: string;
+  projectPath?: string;
+}
