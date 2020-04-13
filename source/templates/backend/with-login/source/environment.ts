@@ -15,7 +15,7 @@ export const env = {
 
 export const PORT = 3000;
 export const JWT_SECRET = '46353svba5734Adbde9sz-as65D5f436asv384120';
-export const AUTH_TOKEN_KEY = 'react-ts-scss-authorization';
+export const AUTH_TOKEN_KEY = '{{projectName}}-authorization';
 
 export const AUTH_COOKIE_OPTIONS = {
   maxAge: 1000 * 60 * 60 * 24,
