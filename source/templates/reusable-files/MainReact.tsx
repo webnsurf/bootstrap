@@ -8,7 +8,8 @@ export const MainPage: FC/* {{props}} */ = () => {
   const [word, setWord] = useState('');
 
   useEffect(() => {
-    setTimeout(() => setWord('😊 let\'s code! 😊'), 2000);
+    const timeout = setTimeout(() => setWord('😊 let\'s code! 😊'), 2000);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
@@ -24,7 +25,6 @@ export const MainPage: FC/* {{props}} */ = () => {
         ) }
         onOpen={ () => {
           setIsLoading(true);
-
           setTimeout(() => setIsLoading(false), 1000);
         } }
         isLoading={ isLoading }

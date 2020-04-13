@@ -4,7 +4,8 @@ export const MainPage: FC/* {{props}} */ = () => {
   const [word, setWord] = useState('');
 
   useEffect(() => {
-    setTimeout(() => setWord('😊 let\'s code! 😊'), 2000);
+    const timeout = setTimeout(() => setWord('😊 let\'s code! 😊'), 2000);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
