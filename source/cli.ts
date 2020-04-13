@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import path from 'path';
+import { spawn } from 'child_process';
 
 import { getOptions } from './utils';
 import { createFrontend, createBackend, createCommon } from './engine';
@@ -20,6 +21,37 @@ export const cli = async (args: string[]) => {
     }
 
     createCommon(options, options.projectPath);
+
+    if (options.withGit) {
+      spawn('git', ['init'], {
+        cwd: options.projectPath,
+        stdio: 'inherit',
+      });
+    }
+
+    if (options.withInstall) {
+      if (options.withBackend) {
+        spawn('npm', ['install'], {
+          cwd: path.join(
+            options.projectPath,
+            'frontend',
+          ),
+          stdio: 'inherit',
+        });
+        spawn('npm', ['install'], {
+          cwd: path.join(
+            options.projectPath,
+            'backend',
+          ),
+          stdio: 'inherit',
+        });
+      } else {
+        spawn('npm', ['install'], {
+          cwd: options.projectPath,
+          stdio: 'inherit',
+        });
+      }
+    }
   } catch (error) {
     if (error.code === 'ARG_UNKNOWN_OPTION') {
       return printError([error.message]);
