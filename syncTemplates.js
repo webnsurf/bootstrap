@@ -10,12 +10,14 @@ const distPath = path.join(__dirname, 'dist/templates');
 
 fs.copySync(sourcePath, distPath);
 
-chokidar.watch(sourcePath).on('change', filePath => {  
-  fs.copySync(
-    filePath,
-    path.join(
-      distPath,
-      filePath.replace(sourcePath, ''),
-    ),
-  );
-});
+if (process.argv[2] == '--watch') {
+  chokidar.watch(sourcePath).on('change', filePath => {  
+    fs.copySync(
+      filePath,
+      path.join(
+        distPath,
+        filePath.replace(sourcePath, ''),
+      ),
+    );
+  });
+}

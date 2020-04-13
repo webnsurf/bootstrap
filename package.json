@@ -4,7 +4,8 @@
   "description": "CLI to bootstrap React projects (including backend) using TypeScript",
   "main": "dist/cli.js",
   "scripts": {
-    "start": "tsc --watch & ./syncTemplates.js"
+    "start": "tsc --watch & ./syncTemplates.js --watch",
+    "build": "tsc && ./syncTemplates.js"
   },
   "bin": {
     "webnsurf-project-bootstrap": "bin/bootstrap.js",
