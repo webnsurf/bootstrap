@@ -41,6 +41,7 @@
         "functions": "never"
       }
     ],
+    "object-curly-newline": "off",
     "import/order": [
       "error",
       {
