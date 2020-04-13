@@ -6,34 +6,26 @@
   text-align: left;
   overflow: hidden;
 
-  .ant-alert {
-    padding-left: 30px;
+  .message-body {
+    border-radius: 3px;
+    padding: 10px;
+  }
 
-    &.ant-alert-no-icon {
-      padding-left: 15px;
+  &.error {
+    color: #333;
+
+    .message-body {
+      background-color: $errorBackground;
+      border: 1px solid lighten($error, 30);
     }
+  }
 
-    .ant-alert-icon {
-      left: 10px;
-    }
+  &.success {
+    color: #333;
 
-    // Update The below using https://intoli.com/blog/antd-scss-theme-plugin/
-    // for proper and more gradual theme control using SASS
-    // All available variables at https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
-    &.ant-alert-error {
-      border-color: $error;
-
-      .ant-alert-icon {
-        color: $error;
-      }
-    }
-
-    &.ant-alert-success {
-      border-color: $success;
-
-      .ant-alert-icon {
-        color: $success;
-      }
+    .message-body {
+      background-color: $successBackground;
+      border: 1px solid lighten($success, 10);
     }
   }
 

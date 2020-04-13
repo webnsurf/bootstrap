@@ -1,7 +1,5 @@
-import React, { useEffect, useState, FC, useCallback } from 'react';
+import React, { useEffect, useState, FC, useCallback, ReactNode } from 'react';
 import classnames from 'classnames';
-import Alert, { AlertProps } from 'antd/lib/alert';
-import 'antd/lib/alert/style';
 
 import { useElementResizeObserver } from 'hooks';
 
@@ -13,7 +11,6 @@ export const Message: FC<MessageProps> = ({
   marginTop = 0,
   marginBottom = 0,
   simple,
-  ...rest
 }) => {
   const [displayedNode, setDisplayedNode] = useState(message);
   const [nodeRef, messageHeight = 0] = useElementResizeObserver(
@@ -51,16 +48,19 @@ export const Message: FC<MessageProps> = ({
             >
         { simple
           ? displayedNode
-          : <Alert message={ displayedNode } type={ type } { ...rest } />
+          : <div className="message-body">{ displayedNode }</div>
         }
       </div>
     </div>
   );
 };
 
-export interface MessageProps extends AlertProps {
-    isOpen?: boolean;
-    marginTop?: number;
-    marginBottom?: number;
-    simple?: boolean;
+export interface MessageProps {
+  message: ReactNode;
+  className?: string;
+  type?: 'error' | 'success';
+  isOpen?: boolean;
+  marginTop?: number;
+  marginBottom?: number;
+  simple?: boolean;
 }

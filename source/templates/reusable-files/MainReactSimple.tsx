@@ -9,9 +9,11 @@ export const MainPage: FC/* {{props}} */ = () => {
   }, []);
 
   return (
-    <div className="app">
-      ....I...say....
-      <div>{ word }</div>
+    <div className="main-page">
+      <div className="template">
+        ....I...say....
+        <div>{ word }</div>
+      </div>
     </div>
   );
 };

@@ -13,13 +13,18 @@ export const MainPage: FC/* {{props}} */ = () => {
   }, []);
 
   return (
-    <div className="app">
-      ....I...say....
-      <div>{ word }</div>
+    <div className="main-page">
+      <div className="template">
+        ....I...say....
+        <div>{ word }</div>
+      </div>
 
 
       <Modal
-        renderActions={ modal => <Button onClick={ modal.open }>Open modal</Button> }
+        className="main-page-modal"
+        renderActions={ modal => (
+          <Button className="action-button" onClick={ modal.open }>Open modal</Button>
+        ) }
         heading={ (
           <span>This is a<b>{ ' 😊 Modal 😊 ' }</b></span>
         ) }

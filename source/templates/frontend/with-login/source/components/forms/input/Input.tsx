@@ -1,10 +1,6 @@
 import React, { FC, useMemo, memo } from 'react';
 import { Field, FieldRenderProps } from 'react-final-form';
 import classnames from 'classnames';
-import AntInput, { InputProps as AntInputProps } from 'antd/lib/input';
-import 'antd/lib/input/style';
-
-import { Modify } from 'utils/ts';
 
 import { Message } from 'components/common';
 
@@ -15,7 +11,6 @@ const InputRenderer: FC<InputRendererProps> = ({
   onChange,
   placeholder,
   className: passedClassName,
-  ...rest
 }) => {
   const { name } = input;
   const randomId = useMemo(() => (
@@ -29,15 +24,11 @@ const InputRenderer: FC<InputRendererProps> = ({
     passedClassName,
   );
 
-  const Component = input.type === 'password'
-    ? AntInput.Password
-    : AntInput;
-
   return (
     <div className={ className }>
       { label && <label className="label" htmlFor={ randomId }>{ label }</label> }
 
-      <Component
+      <input
         id={ randomId }
         onChange={ event => {
           if (onChange) {
@@ -48,7 +39,6 @@ const InputRenderer: FC<InputRendererProps> = ({
         } }
         placeholder={ placeholder }
         { ...input }
-        { ...rest }
       />
 
       <Message
@@ -87,7 +77,7 @@ export const Input: FC<InputProps> = memo(({
   );
 });
 
-interface CustomInputProps {
+export interface InputProps {
   name: string;
   onChange?: (value: string) => void;
   type?: 'text' | 'time' | 'number' | 'email' | 'password';
@@ -102,8 +92,3 @@ interface InputRendererProps extends
   FieldRenderProps<string, HTMLInputElement>,
   Omit<InputProps, 'name'> {
 }
-
-export type InputProps = Modify<
-    Omit<AntInputProps, 'value'>,
-    CustomInputProps
->

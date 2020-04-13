@@ -4,8 +4,15 @@ body {
   margin: 0;
 }
 
-.app {
+.template {
   text-align: center;
   font-size: 30px;
   margin-top: 40px;
+}
+
+.main-page {
+  .action-button {
+    display: block;
+    margin: 20px auto;
+  }
 }

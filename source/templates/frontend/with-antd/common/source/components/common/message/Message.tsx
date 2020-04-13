@@ -59,8 +59,8 @@ export const Message: FC<MessageProps> = ({
 };
 
 export interface MessageProps extends AlertProps {
-    isOpen?: boolean;
-    marginTop?: number;
-    marginBottom?: number;
-    simple?: boolean;
+  isOpen?: boolean;
+  marginTop?: number;
+  marginBottom?: number;
+  simple?: boolean;
 }

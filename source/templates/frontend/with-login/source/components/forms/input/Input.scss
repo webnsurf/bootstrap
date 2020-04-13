@@ -14,40 +14,24 @@
     max-height: 100%;
     font-size: 16px;
     height: 40px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 0 10px;
+    display: block;
+    width: 100%;
 
     &[disabled] {
       opacity: 0.8;
     }
   }
 
-  .ant-input-password {
-    padding: 0;
-
-    input.ant-input {
-      width: 100%;
-      display: block;
-      padding: 0 40px 0 10px;
-    }
-  }
-
-  .ant-input-suffix {
-    position: absolute;
-    background: none;
-    margin: 0;
-    top: 50%;
-    right: 8px;
-    transform: translateY(-50%);
-
-    .ant-input-password-icon {
-      font-size: 24px;
-      display: block;
-    }
-  }
-
   &.has-error {
-    .ant-input,
-    .ant-input-password {
-      border-color: lighten($error, 30);
+    input {
+      border-color: $error;
     }
   }
 }
