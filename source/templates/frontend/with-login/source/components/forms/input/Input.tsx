@@ -4,8 +4,9 @@ import classnames from 'classnames';
 import AntInput, { InputProps as AntInputProps } from 'antd/lib/input';
 import 'antd/lib/input/style';
 
-import { Message } from 'components/common';
 import { Modify } from 'utils/ts';
+
+import { Message } from 'components/common';
 
 const InputRenderer: FC<InputRendererProps> = ({
   meta: { error, touched },
