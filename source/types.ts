@@ -7,17 +7,30 @@ export interface InitialArguments {
   noGit?: boolean;
   noRouter?: boolean;
   noLogin?: boolean;
-  noAntd?: boolean;
+  designLibrary?: 'antd' | 'material';
+  withDocker?: boolean;
+  withPipeline?: boolean;
   runInstall?: boolean;
+  serverUsername?: string;
+  serverIp?: string;
 }
 
-export interface Options {
+export interface InitialOptions {
   projectName: string;
   projectPath: string;
   withBackend: boolean;
   withGit: boolean;
   withRouter: boolean;
   withLogin: boolean;
-  withAntd: boolean;
+  withDocker: boolean;
+  withPipeline: boolean;
   withInstall: boolean;
+  designLibrary: 'antd' | 'material' | null;
 }
+
+export interface ServerOptions {
+  serverUsername: string;
+  serverIp: string;
+}
+
+export interface Options extends InitialOptions, ServerOptions {}
