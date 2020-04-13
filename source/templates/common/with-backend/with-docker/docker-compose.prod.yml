@@ -1,0 +1,34 @@
+version: '3.5'
+
+services:
+  backend:
+    container_name: {{projectName}}-backend
+    image: ${COMPOSE_BACKEND_IMAGE}
+    ports:
+      - 80
+    labels:
+      traefik.enable: true
+      traefik.http.routers.{{projectName}}-backend.rule: ${COMPOSE_ROUTER_HOST} && PathPrefix(`/api`)
+      traefik.http.routers.{{projectName}}-backend.entrypoints: websecure
+      traefik.http.routers.{{projectName}}-backend.tls: true
+
+
+  frontend:
+    container_name: {{projectName}}-frontend
+    image: ${COMPOSE_FRONTEND_IMAGE}
+    ports:
+      - 80
+    labels:
+      traefik.enable: true
+      traefik.http.routers.{{projectName}}-redirect.rule: ${COMPOSE_ROUTER_HOST}
+      traefik.http.routers.{{projectName}}-redirect.middlewares: https-redirect@file
+      traefik.http.routers.{{projectName}}-redirect.entrypoints: web
+
+      traefik.http.routers.{{projectName}}-frontend.rule: ${COMPOSE_ROUTER_HOST}
+      traefik.http.routers.{{projectName}}-frontend.entrypoints: websecure
+      traefik.http.routers.{{projectName}}-frontend.tls: true
+
+networks:
+  default:
+    external:
+      name: webnsurf_network

@@ -1,0 +1,31 @@
+version: '3.5'
+
+services:
+  {{projectName}}-dev:
+    container_name: {{projectName}}-dev
+    build:
+      context: frontend
+      dockerfile: Dockerfile.dev
+    image: {{projectName}}-dev:latest
+    ports:
+      - 80
+    labels:
+      traefik.enable: true
+      traefik.http.routers.{{projectName}}-dev-redirect.rule: Host(`dev.webnsurf.com`)
+      traefik.http.routers.{{projectName}}-dev-redirect.entrypoints: web
+      traefik.http.routers.{{projectName}}-dev-redirect.middlewares: https-redirect@file
+
+      traefik.http.routers.{{projectName}}-dev.rule: Host(`dev.webnsurf.com`)
+      traefik.http.routers.{{projectName}}-dev.entrypoints: websecure
+      traefik.http.routers.{{projectName}}-dev.tls: true
+    volumes:
+      - /source/dist
+      - /source/node_modules
+      - $PWD:/source
+    environment:
+      - NODE_ENV=development
+
+networks:
+  default:
+    external:
+      name: webnsurf_network

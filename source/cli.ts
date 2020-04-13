@@ -2,7 +2,7 @@
 import path from 'path';
 
 import { getOptions } from './utils';
-import { createFrontend, createBackend } from './engine';
+import { createFrontend, createBackend, createCommon } from './engine';
 import { printError } from './utils/printError';
 
 export const cli = async (args: string[]) => {
@@ -18,6 +18,8 @@ export const cli = async (args: string[]) => {
     } else {
       createFrontend(options, options.projectPath);
     }
+
+    createCommon(options, options.projectPath);
   } catch (error) {
     if (error.code === 'ARG_UNKNOWN_OPTION') {
       return printError([error.message]);
