@@ -5,6 +5,7 @@ const webpack = require('webpack');
 
 const mainConfig = require('./webpack.config')('development');
 
+/** @type { import('webpack').Configuration } */
 module.exports = {
   ...mainConfig,
 
@@ -41,8 +42,8 @@ module.exports = {
     disableHostCheck: true,
     public: 'dev.webnsurf.com',
     proxy: {
-      '/api': 'http://localhost:3000'
-    }
+      '/api': 'http://localhost:3000',
+    },
   },
 
   devtool: 'source-map',

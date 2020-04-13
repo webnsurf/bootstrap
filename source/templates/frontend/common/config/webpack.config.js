@@ -3,6 +3,7 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+/** @type { () => import('webpack').Configuration } */
 module.exports = env => ({
   entry: path.resolve(__dirname, '../source/index'),
   resolve: {
@@ -25,7 +26,7 @@ module.exports = env => ({
       {
         test: /\.tsx?$/,
         loader: 'baggage-loader?{"[file].scss":{}}',
-        enforce: 'post'
+        enforce: 'post',
       },
       {
         test: /\.less$/,

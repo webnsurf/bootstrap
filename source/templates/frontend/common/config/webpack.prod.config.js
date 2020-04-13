@@ -6,6 +6,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const mainConfig = require('./webpack.config')('production');
 
+/** @type { import('webpack').Configuration } */
 module.exports = {
   ...mainConfig,
 
