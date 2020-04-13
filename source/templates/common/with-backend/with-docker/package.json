@@ -1,0 +1,11 @@
+{
+  "name": "{{projectName}}",
+  "scripts": {
+    "run-dev": "docker-compose up | sed -En \"s/({{projectName}}-dev_\\s*(FE|BE)\\s*(.*)|(Something))/\\2 \\3\\4/p\"",
+    "build-dev": "docker-compose up -d --build && npm run run-dev",
+    "clean-dev": "docker-compose down && npm run remove-images",
+    "run-local": "export ENVIRONMENT=local && ./docker/deploy.sh",
+    "build-local": "export ENVIRONMENT=local && ./docker/build/backend.sh && ./docker/build/frontend.sh && npm run run-local",
+    "remove-images": "docker image rm {{projectName}}-dev_BE {{projectName}}-dev_FE || true"
+  }
+}
