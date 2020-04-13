@@ -227,6 +227,10 @@ const prompt = async ({
     return serverOptions;
   })();
 
+  if (initialAnswers.withPipeline) {
+    initialAnswers.withDocker = true;
+  }
+
   return {
     ...initialOptions,
     ...initialAnswers,
