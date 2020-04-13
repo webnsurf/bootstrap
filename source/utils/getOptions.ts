@@ -87,7 +87,7 @@ const prompt = async ({
     projectPath: projectName ? path.join(workingDirPath, projectName) : workingDirPath,
     withBackend: !noBackend,
     withGit: !noGit,
-    withRouter: !noRouter,
+    withRouter: !noRouter || !noLogin,
     withLogin: !noLogin,
     withDocker: !!withDocker || !!withPipeline,
     withPipeline: !!withPipeline,
