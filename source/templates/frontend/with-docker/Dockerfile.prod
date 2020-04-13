@@ -1,0 +1,20 @@
+FROM node:12.16.0-alpine
+
+COPY . /www/
+
+WORKDIR /www/
+
+RUN npm install
+
+ARG NODE_ENV
+ENV NODE_ENV=$NODE_ENV
+
+RUN npm run build
+
+FROM nginx:1.16.1-alpine
+
+WORKDIR /usr/share/nginx/html/
+
+COPY nginx.conf /etc/nginx/
+
+COPY --from=0 /www/dist .

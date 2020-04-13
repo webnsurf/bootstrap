@@ -1,0 +1,49 @@
+@import '../../../variables';
+
+.message {
+  transition-property: height;
+  transition-duration: 200ms;
+  text-align: left;
+  overflow: hidden;
+
+  .ant-alert {
+    padding-left: 30px;
+
+    &.ant-alert-no-icon {
+      padding-left: 15px;
+    }
+
+    .ant-alert-icon {
+      left: 10px;
+    }
+
+    // Update The below using https://intoli.com/blog/antd-scss-theme-plugin/
+    // for proper and more gradual theme control using SASS
+    // All available variables at https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
+    &.ant-alert-error {
+      border-color: $error;
+
+      .ant-alert-icon {
+        color: $error;
+      }
+    }
+
+    &.ant-alert-success {
+      border-color: $success;
+
+      .ant-alert-icon {
+        color: $success;
+      }
+    }
+  }
+
+  &.simple {
+    &.error {
+      color: $error;
+    }
+
+    &.success {
+      color: $success;
+    }
+  }
+}

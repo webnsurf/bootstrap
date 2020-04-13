@@ -1,0 +1,24 @@
+.login-page {
+  .modal-inner {
+    width: 550px;
+  }
+
+  .login-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .input-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .login-button {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 350px;
+    margin-top: 20px;
+  }
+}
