@@ -38,4 +38,6 @@ export interface Options extends InitialOptions, ServerOptions {}
 export interface Variables {
   projectName?: string;
   projectPath?: string;
+  serverUsername?: string;
+  serverIp?: string;
 }

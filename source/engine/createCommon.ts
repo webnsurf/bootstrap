@@ -7,7 +7,7 @@ import { Options } from '../types';
 import { mergeFolders } from './utils';
 
 export const createCommon = (
-  { withBackend, withDocker, withPipeline, projectName }: Options,
+  { withBackend, withDocker, withPipeline, projectName, serverUsername, serverIp }: Options,
   destinationPath: string,
 ) => {
   const templatesPath = path.join(
@@ -36,6 +36,6 @@ export const createCommon = (
   mergeFolders(
     getFolders(),
     destinationPath,
-    { projectName },
+    { projectName, serverUsername, serverIp },
   );
 };
