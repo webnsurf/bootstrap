@@ -15,5 +15,5 @@ export const getReusableFiles = () => {
       path.join(sourcePath, filePath),
       'utf8',
     ),
-  }), {});
+  }), {} as any);
 };

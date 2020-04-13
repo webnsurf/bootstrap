@@ -1,10 +1,15 @@
 /* eslint-disable no-console */
 import path from 'path';
-import { spawn } from 'child_process';
+import { spawn, exec } from 'child_process';
 
-import { getOptions } from './utils';
+import fs from 'fs-extra';
+
+import { getOptions, printError } from './utils';
 import { createFrontend, createBackend, createCommon } from './engine';
-import { printError } from './utils/printError';
+import { getReusableFiles } from './engine/utils';
+import { replaceVariables } from './engine/utils/replaceVariables';
+
+const reusableFiles = getReusableFiles();
 
 export const cli = async (args: string[]) => {
   try {
@@ -12,6 +17,30 @@ export const cli = async (args: string[]) => {
 
     console.log(`Creating project "${options.projectName}" with the following options:`);
     console.log(options);
+
+    fs.ensureDirSync(options.projectPath);
+
+    if (options.withGit) {
+      await new Promise(resolve => {
+        fs.writeFileSync(
+          path.resolve(options.projectPath, 'README.md'),
+          replaceVariables(
+            reusableFiles.README,
+            { projectName: options.projectName },
+          ),
+        );
+
+        exec('git init && git add . && git commit -m "Initial commit with README.md" --no-verify', { cwd: options.projectPath }, (err, stdout) => {
+          if (err) {
+            throw err;
+          }
+
+          console.log(stdout);
+
+          resolve();
+        });
+      });
+    }
 
     if (options.withBackend) {
       createBackend(options, path.join(options.projectPath, 'backend'));
@@ -21,13 +50,6 @@ export const cli = async (args: string[]) => {
     }
 
     createCommon(options, options.projectPath);
-
-    if (options.withGit) {
-      spawn('git', ['init'], {
-        cwd: options.projectPath,
-        stdio: 'inherit',
-      });
-    }
 
     if (options.withInstall) {
       if (options.withBackend) {
