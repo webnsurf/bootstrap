@@ -6,9 +6,10 @@ services:
     build:
       context: frontend
       dockerfile: Dockerfile.dev
+    tty: true
     image: {{projectName}}-dev:latest
     ports:
-      - 80
+      - 4000
     labels:
       traefik.enable: true
       traefik.http.routers.{{projectName}}-dev-redirect.rule: Host(`dev.webnsurf.com`)
