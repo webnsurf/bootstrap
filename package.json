@@ -1,5 +1,5 @@
 {
-  "name": "@webnsurf/project-bootstrap",
+  "name": "@webnsurf/bootstrap",
   "version": "0.1.0",
   "description": "CLI to bootstrap React projects (including backend) using TypeScript",
   "main": "lib/cli.js",
@@ -8,7 +8,7 @@
     "build": "tsc && ./syncTemplates.js"
   },
   "bin": {
-    "webnsurf-project-bootstrap": "bin/bootstrap.js",
+    "webnsurf-bootstrap": "bin/bootstrap.js",
     "wns-new": "bin/bootstrap.js"
   },
   "publishConfig": {
