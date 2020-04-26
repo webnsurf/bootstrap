@@ -3,6 +3,7 @@ export type RawArgs = string[];
 export interface InitialArguments {
   projectName?: string;
   skipPrompts?: boolean;
+  setDefaults?: boolean;
   noBackend?: boolean;
   noGit?: boolean;
   noRouter?: boolean;
@@ -41,3 +42,5 @@ export interface Variables {
   serverUsername?: string;
   serverIp?: string;
 }
+
+export type SavedOptions = Omit<InitialOptions, 'projectName' | 'projectPath'> & ServerOptions;

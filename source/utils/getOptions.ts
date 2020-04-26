@@ -1,19 +1,23 @@
 import path from 'path';
 
 import arg from 'arg';
+import fs from 'fs-extra';
 import inquirer, { QuestionCollection } from 'inquirer';
 
-import { RawArgs, InitialArguments, Options, InitialOptions, ServerOptions } from '../types';
+import { RawArgs, InitialArguments, Options, InitialOptions, ServerOptions, SavedOptions } from '../types';
 import { printError } from './printError';
 
 const sanitizeProjectName = (rawName: string) => (
   rawName.toLowerCase().replace(/\s+/g, '-')
 );
 
+const savedOptionsPath = path.join(__dirname, 'options.json');
+
 const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
   const args = arg(
     {
       '--yes': Boolean,
+      '--set-defaults': Boolean,
       '--no-backend': Boolean,
       '--no-git': Boolean,
       '--no-router': Boolean,
@@ -51,6 +55,7 @@ const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
   return {
     projectName: args._[0],
     skipPrompts: args['--yes'] || false,
+    setDefaults: args['--set-defaults'] || false,
     noBackend: args['--no-backend'] || false,
     noGit: args['--no-git'] || false,
     noRouter: args['--no-router'] || false,
@@ -65,8 +70,9 @@ const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
 };
 
 const prompt = async ({
-  skipPrompts,
   projectName,
+  skipPrompts,
+  setDefaults,
   noBackend,
   noGit,
   noRouter,
@@ -95,6 +101,10 @@ const prompt = async ({
     withInstall: !!runInstall,
   };
 
+  const savedOptions: InitialOptions = (() => {
+    try { return fs.readJSONSync(savedOptionsPath); } catch { }
+  })();
+
   const serverOptions: ServerOptions = {
     serverUsername: serverUsername || '<SERVER_USERNAME>',
     serverIp: serverIp || '<SERVER_IP>',
@@ -104,6 +114,7 @@ const prompt = async ({
     return {
       ...initialOptions,
       ...serverOptions,
+      ...savedOptions,
     };
   }
 
@@ -229,6 +240,23 @@ const prompt = async ({
 
   if (initialAnswers.withPipeline) {
     initialAnswers.withDocker = true;
+  }
+
+  if (setDefaults) {
+    const defaults: SavedOptions = {
+      withBackend: initialAnswers.withBackend,
+      withGit: initialAnswers.withGit,
+      withRouter: initialAnswers.withRouter,
+      withLogin: initialAnswers.withLogin,
+      withDocker: initialAnswers.withDocker,
+      withPipeline: initialAnswers.withPipeline,
+      withInstall: initialAnswers.withInstall,
+      designLibrary: initialAnswers.designLibrary,
+      serverUsername: serverAnswers.serverUsername,
+      serverIp: serverAnswers.serverIp,
+    };
+
+    fs.writeFileSync(savedOptionsPath, JSON.stringify(defaults, null, 2));
   }
 
   return {
