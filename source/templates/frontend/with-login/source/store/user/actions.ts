@@ -81,15 +81,17 @@ export const useUserActions = (): UserActions => {
     },
 
     logout: async () => {
-      Cookies.expire(AUTH_TOKEN_KEY);
+      const { pathname } = window.location;
 
-      if (!Cookies.get(LAST_URL_KEY)) {
-        Cookies.set(LAST_URL_KEY, window.location.pathname);
-      }
+      Cookies.expire(AUTH_TOKEN_KEY);
 
       dispatch(baseActions.afterLogout());
 
-      history.push('/login');
+      if (!['/login'].includes(pathname)) {
+        Cookies.set(LAST_URL_KEY, pathname);
+
+        history.push('/login');
+      }
     },
   }), [dispatch, history]);
 
