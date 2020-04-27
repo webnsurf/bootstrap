@@ -1,6 +1,6 @@
 import sortPackage from 'sort-package-json';
 
-import { Options, Variables } from '../../../types';
+import { Options } from '../../../types';
 import { replaceVariables } from '../replaceVariables';
 
 const common = {
@@ -138,10 +138,7 @@ const withDocker = {
   },
 };
 
-export const getFrontendPackage = (
-  options: Pick<Options, 'withRouter' | 'withLogin' | 'withGit' | 'withDocker' | 'withBackend' | 'designLibrary'>,
-  variables: Variables,
-) => {
+export const getFrontendPackage = (options: Options) => {
   let packageObject = { ...common };
 
   if (options.withRouter) {
@@ -212,9 +209,7 @@ export const getFrontendPackage = (
   }
 
   return replaceVariables(
-    sortPackage(
-      JSON.stringify(packageObject, null, 2),
-    ),
-    variables,
+    sortPackage(JSON.stringify(packageObject, null, 2)),
+    options,
   );
 };

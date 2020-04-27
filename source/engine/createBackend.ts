@@ -9,11 +9,10 @@ import { getBackendPackage, mergeFolders } from './utils';
 const templatesPath = path.join(__dirname, '../templates/backend');
 
 export const createBackend = (
-  { withLogin, withGit, withDocker, projectName }: Options,
+  options: Options,
   destinationPath: string,
 ) => {
-  fs.ensureDirSync(destinationPath);
-
+  const { withLogin, withGit, withDocker } = options;
   const getFolders = () => {
     const folders = [path.join(templatesPath, 'common')];
 
@@ -32,17 +31,16 @@ export const createBackend = (
     return folders;
   };
 
+  fs.ensureDirSync(destinationPath);
+
   mergeFolders(
     getFolders(),
     destinationPath,
-    { projectName },
+    options,
   );
 
   fs.writeFileSync(
     path.join(destinationPath, 'package.json'),
-    getBackendPackage(
-      { withLogin, withGit },
-      { projectName },
-    ),
+    getBackendPackage(options),
   );
 };

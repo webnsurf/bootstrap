@@ -1,6 +1,6 @@
 import sortPackage from 'sort-package-json';
 
-import { Options, Variables } from '../../../types';
+import { Options } from '../../../types';
 import { replaceVariables } from '../replaceVariables';
 
 const common = {
@@ -62,10 +62,7 @@ const withGit = {
   },
 };
 
-export const getBackendPackage = (
-  options: Pick<Options, 'withLogin' | 'withGit'>,
-  variables: Variables,
-) => {
+export const getBackendPackage = (options: Options) => {
   let packageObject = { ...common };
 
   if (options.withLogin) {
@@ -98,9 +95,7 @@ export const getBackendPackage = (
   }
 
   return replaceVariables(
-    sortPackage(
-      JSON.stringify(packageObject, null, 2),
-    ),
-    variables,
+    sortPackage(JSON.stringify(packageObject, null, 2)),
+    options,
   );
 };

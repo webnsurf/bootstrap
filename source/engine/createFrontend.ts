@@ -9,9 +9,10 @@ import { getFrontendPackage, mergeFolders } from './utils';
 const templatesPath = path.join(__dirname, '../templates/frontend');
 
 export const createFrontend = (
-  { projectName, withGit, withDocker, withRouter, withBackend, withLogin, designLibrary }: Options,
+  options: Options,
   destinationPath: string,
 ) => {
+  const { withGit, withDocker, withRouter, withBackend, withLogin, designLibrary } = options;
   fs.ensureDirSync(destinationPath);
 
   const getFolders = () => {
@@ -51,14 +52,11 @@ export const createFrontend = (
   mergeFolders(
     getFolders(),
     destinationPath,
-    { projectName },
+    options,
   );
 
   fs.writeFileSync(
     path.join(destinationPath, 'package.json'),
-    getFrontendPackage(
-      { designLibrary, withBackend, withDocker, withGit, withLogin, withRouter },
-      { projectName },
-    ),
+    getFrontendPackage(options),
   );
 };

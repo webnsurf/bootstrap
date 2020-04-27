@@ -39,13 +39,6 @@ export interface ServerOptions {
   serverIp: string;
 }
 
-export interface Options extends InitialOptions, ServerOptions {}
-
-export interface Variables {
-  projectName?: string;
-  projectPath?: string;
-  serverUsername?: string;
-  serverIp?: string;
-}
+export interface Options extends InitialOptions, DomainOptions, ServerOptions {}
 
 export type SavedOptions = Omit<InitialOptions, 'projectName' | 'projectPath'> & DomainOptions & ServerOptions;

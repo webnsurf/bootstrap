@@ -3,7 +3,7 @@ import path from 'path';
 
 import fs from 'fs-extra';
 
-import { Variables } from '../../types';
+import { Options } from '../../types';
 import { replaceVariables } from './replaceVariables';
 import { getFiles, getReusableFiles } from './general';
 
@@ -12,7 +12,7 @@ const reusableFiles = getReusableFiles();
 export const mergeFolders = (
   foldersToMerge: string[],
   destinationPath: string,
-  variables: Variables,
+  options: Options,
 ) => {
   const traverseTree = (directoryPath: string, initialDirectory = directoryPath) => {
     getFiles(directoryPath).forEach(file => {
@@ -49,7 +49,7 @@ export const mergeFolders = (
 
       fs.writeFileSync(
         fullDestinationPath,
-        replaceVariables(fileContents, variables),
+        replaceVariables(fileContents, options),
         { mode: fileStat.mode },
       );
     });
