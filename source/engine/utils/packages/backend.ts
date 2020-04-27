@@ -12,7 +12,7 @@ const common = {
   'author': '',
   'main': 'dist/index.js',
   'scripts': {
-    'build': 'tsc -p .',
+    'build': 'tsc',
     'start': 'node dist/index.js',
     'start:dev': 'tsnd source/index.ts',
   },
