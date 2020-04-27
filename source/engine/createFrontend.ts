@@ -40,10 +40,6 @@ export const createFrontend = (
       if (withRouter) {
         folders.push(path.join(templatesPath, 'with-antd/with-router'));
       }
-
-      if (withLogin) {
-        folders.push(path.join(templatesPath, 'with-antd/with-login'));
-      }
     }
 
     return folders;
