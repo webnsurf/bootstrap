@@ -4,8 +4,8 @@
   "description": "CLI to bootstrap React projects (including backend) using TypeScript",
   "main": "lib/cli.js",
   "scripts": {
-    "start": "tsc --watch & ./syncTemplates.js --watch",
-    "build": "tsc && ./syncTemplates.js"
+    "start": "tsc --watch & node syncTemplates.js --watch",
+    "build": "tsc && node syncTemplates.js"
   },
   "bin": {
     "wns-new": "bin/bootstrap.js"
