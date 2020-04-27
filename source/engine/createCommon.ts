@@ -21,7 +21,9 @@ export const createCommon = (
   fs.ensureDirSync(destinationPath);
 
   const getFolders = () => {
-    const folders = [path.join(templatesPath, 'common')];
+    const folders = withBackend
+      ? [path.join(templatesPath, 'common')]
+      : [];
 
     if (withDocker) {
       folders.push(path.join(templatesPath, 'with-docker'));
