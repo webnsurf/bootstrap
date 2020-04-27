@@ -5,7 +5,7 @@ services:
     container_name: {{projectName}}-backend
     image: ${COMPOSE_BACKEND_IMAGE}
     ports:
-      - 80
+      - 3000
     labels:
       traefik.enable: true
       traefik.http.routers.{{projectName}}-backend.rule: ${COMPOSE_ROUTER_HOST} && PathPrefix(`/api`)
