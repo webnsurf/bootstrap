@@ -4,7 +4,7 @@ import arg from 'arg';
 import fs from 'fs-extra';
 import inquirer, { QuestionCollection } from 'inquirer';
 
-import { RawArgs, InitialArguments, Options, InitialOptions, ServerOptions, SavedOptions } from '../types';
+import { RawArgs, InitialArguments, Options, InitialOptions, ServerOptions, SavedOptions, DomainOptions } from '../types';
 import { printError } from './printError';
 
 const sanitizeProjectName = (rawName: string) => (
@@ -26,6 +26,7 @@ const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
       '--pipeline': Boolean,
       '--install': Boolean,
       '--design': String,
+      '--domain': String,
       '--server-user': String,
       '--server-ip': String,
       '-y': '--yes',
@@ -64,6 +65,7 @@ const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
     withDocker: args['--docker'] || false,
     withPipeline: args['--pipeline'] || false,
     runInstall: args['--install'] || false,
+    domain: args['--domain'],
     serverUsername: args['--server-user'],
     serverIp: args['--server-ip'],
     designLibrary,
@@ -81,6 +83,7 @@ const prompt = async ({
   withDocker,
   withPipeline,
   designLibrary,
+  domain,
   serverUsername,
   serverIp,
   runInstall,
@@ -106,6 +109,10 @@ const prompt = async ({
     try { return fs.readJSONSync(savedOptionsPath); } catch { }
   })();
 
+  const domainOptions: DomainOptions = {
+    domain: domain || 'webnsurf.com',
+  };
+
   const serverOptions: ServerOptions = {
     serverUsername: serverUsername || '<SERVER_USERNAME>',
     serverIp: serverIp || '<SERVER_IP>',
@@ -114,6 +121,7 @@ const prompt = async ({
   if (skipPrompts) {
     return {
       ...initialOptions,
+      ...domainOptions,
       ...serverOptions,
       ...savedOptions,
     };
@@ -209,6 +217,20 @@ const prompt = async ({
   }
 
   const initialAnswers = await inquirer.prompt<InitialOptions>(questions);
+  const domainAnswers = await (() => {
+    if (withDocker || initialAnswers.withDocker) {
+      if (!domain) {
+        return inquirer.prompt<DomainOptions>([{
+          type: 'input',
+          name: 'domain',
+          message: 'Enter the domain name to use',
+          default: domainOptions.domain,
+        }]);
+      }
+    }
+
+    return domainOptions;
+  })();
   const serverAnswers = await (() => {
     const serverQuestions: QuestionCollection[] = [];
 
@@ -217,7 +239,7 @@ const prompt = async ({
         serverQuestions.push({
           type: 'input',
           name: 'serverUsername',
-          message: 'Enter your username on the remote server?',
+          message: 'Enter your username on the remote server',
           default: serverOptions.serverUsername,
         });
       }
@@ -226,7 +248,7 @@ const prompt = async ({
         serverQuestions.push({
           type: 'input',
           name: 'serverIp',
-          message: 'Enter your remote server IP address?',
+          message: 'Enter your remote server IP address',
           default: serverOptions.serverIp,
         });
       }
@@ -243,28 +265,32 @@ const prompt = async ({
     initialAnswers.withDocker = true;
   }
 
+  const options = {
+    ...initialOptions,
+    ...initialAnswers,
+    ...domainAnswers,
+    ...serverAnswers,
+  };
+
   if (setDefaults) {
     const defaults: SavedOptions = {
-      withBackend: initialAnswers.withBackend,
-      withGit: initialAnswers.withGit,
-      withRouter: initialAnswers.withRouter,
-      withLogin: initialAnswers.withLogin,
-      withDocker: initialAnswers.withDocker,
-      withPipeline: initialAnswers.withPipeline,
-      withInstall: initialAnswers.withInstall,
-      designLibrary: initialAnswers.designLibrary,
-      serverUsername: serverAnswers.serverUsername,
-      serverIp: serverAnswers.serverIp,
+      withBackend: options.withBackend,
+      withGit: options.withGit,
+      withRouter: options.withRouter,
+      withLogin: options.withLogin,
+      withDocker: options.withDocker,
+      withPipeline: options.withPipeline,
+      withInstall: options.withInstall,
+      domain: options.domain,
+      designLibrary: options.designLibrary,
+      serverUsername: options.serverUsername,
+      serverIp: options.serverIp,
     };
 
     fs.writeFileSync(savedOptionsPath, JSON.stringify(defaults, null, 2));
   }
 
-  return {
-    ...initialOptions,
-    ...initialAnswers,
-    ...serverAnswers,
-  };
+  return options;
 };
 
 export const getOptions = async (rawArgs: RawArgs): Promise<Options> => {

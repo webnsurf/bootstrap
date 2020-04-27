@@ -12,6 +12,7 @@ export interface InitialArguments {
   withDocker?: boolean;
   withPipeline?: boolean;
   runInstall?: boolean;
+  domain?: string;
   serverUsername?: string;
   serverIp?: string;
 }
@@ -29,6 +30,10 @@ export interface InitialOptions {
   designLibrary: 'antd' | 'material' | null;
 }
 
+export interface DomainOptions {
+  domain: string;
+}
+
 export interface ServerOptions {
   serverUsername: string;
   serverIp: string;
@@ -43,4 +48,4 @@ export interface Variables {
   serverIp?: string;
 }
 
-export type SavedOptions = Omit<InitialOptions, 'projectName' | 'projectPath'> & ServerOptions;
+export type SavedOptions = Omit<InitialOptions, 'projectName' | 'projectPath'> & DomainOptions & ServerOptions;
