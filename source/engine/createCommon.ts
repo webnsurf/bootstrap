@@ -1,3 +1,4 @@
+import { exec } from 'child_process';
 import path from 'path';
 
 import fs from 'fs-extra';
@@ -38,4 +39,10 @@ export const createCommon = (
     destinationPath,
     { projectName, serverUsername, serverIp },
   );
+
+  exec('make --version', err => {
+    if (err) {
+      return fs.unlinkSync(path.resolve(destinationPath, 'Makefile'));
+    }
+  });
 };
