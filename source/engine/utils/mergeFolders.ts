@@ -17,13 +17,14 @@ export const mergeFolders = (
   const traverseTree = (directoryPath: string, initialDirectory = directoryPath) => {
     getFiles(directoryPath).forEach(file => {
       const fullPath = path.join(directoryPath, file);
+      const fileStat = fs.statSync(fullPath);
       const fullDestinationPath = path.join(
         destinationPath,
         directoryPath.replace(initialDirectory, ''),
         file,
       );
 
-      if (fs.statSync(fullPath).isDirectory()) {
+      if (fileStat.isDirectory()) {
         fs.ensureDirSync(fullDestinationPath);
 
         return traverseTree(fullPath, initialDirectory);
@@ -38,11 +39,14 @@ export const mergeFolders = (
           __variables,
         );
 
-        fs.writeFileSync(fullDestinationPath, reusableFile);
+        fs.writeFileSync(fullDestinationPath, reusableFile, {
+          mode: fileStat.mode,
+        });
       } catch (err) {
         fs.writeFileSync(
           fullDestinationPath,
           replaceVariables(fileContents, variables),
+          { mode: fileStat.mode },
         );
       }
     });
