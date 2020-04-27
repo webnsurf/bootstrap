@@ -9,13 +9,13 @@ pipeline {
         }
         stage('Build Backend Image') {
             steps {
-                sh 'docker/build/backend.sh'
+                sh 'docker/build.sh backend'
             }
         }
 
         stage('Build Frontend Image') {
             steps {
-                sh 'docker/build/frontend.sh'
+                sh 'docker/build.sh frontend'
             }
         }
 
@@ -24,7 +24,7 @@ pipeline {
                 expression { env.ENVIRONMENT == 'staging' }
             }
             steps {
-                sh 'docker/deploy.sh'
+                sh 'docker/start.sh'
             }
         }
 

@@ -2,34 +2,43 @@
 buildNumber=$BUILD_NUMBER;
 environment=$ENVIRONMENT;
 
-readBuildNumber() {
-  read -p "Please enter a build number: " usersBuildNumber;
-
-  if [ "$usersBuildNumber" = "" ]; then
-    echo 'latest';
-  else
-    echo $usersBuildNumber;
-  fi;
-}
-
-readEnvironment() {
-  read -p "Please enter build environment: " usersEnvironment;
-  
-  if [ "$usersEnvironment" = "" ]; then
-    echo 'production';
-  else
-    echo $usersEnvironment;
-  fi;
-}
+timestamp=$(date +'%Y-%m-%d_%H.%M.%S')
+projectName="effectas"
 
 if [ "$buildNumber" = "" ]; then
-  [ "$1" = "" ] && buildNumber=$(readBuildNumber) || buildNumber=$1;
+  [ "$1" = "" ] && buildNumber="latest" || buildNumber=$1;
 fi;
 
 if [ "$environment" = "" ]; then
-  [ "$2" = "" ] && environment=$(readEnvironment) || environment=$2;
+  [ "$2" = "" ] && environment="production" || environment=$2;
 fi;
 
-git pull;
+if [ "$environment" = "production" ]; then
+  hostRule="Host(\`webnsurf.com\`) || Host(\`www.webnsurf.com\`)"
+  redirect="full-strip-slash@file, full-redirect@file"
+else
+  hostRule="Host(\`$environment.webnsurf.com\`)"
+  redirect="https-strip-slash@file, https-redirect@file"
+fi;
 
-ENVIRONMENT=$environment BUILD_NUMBER=$buildNumber docker/deploy.sh;
+frontendImage="$projectName-frontend:$buildNumber"
+backendImage="$projectName-backend:$buildNumber"
+
+echo "\\n|-----------------------------------------------------------------------------------------|"
+echo "|-------------- Starting $projectName containers --------------------------------------------|"
+echo "|-----------------------------------------------------------------------------------------|"
+echo "  Time------------------------| $timestamp"
+echo "  Environment:----------------| $environment"
+echo "  Frontend Docker Image name:-| $frontendImage"
+echo "  Backend Docker Image name:--| $backendImage"
+echo "  Host Rule:------------------| $hostRule"
+echo "  Redirect:-------------------| $redirect"
+echo "|-----------------------------------------------------------------------------------------|"
+echo "|-----------------------------------------------------------------------------------------|\\n"
+
+export COMPOSE_FRONTEND_IMAGE="$frontendImage"
+export COMPOSE_BACKEND_IMAGE="$backendImage"
+export COMPOSE_REDIRECT_STRATEGY="$redirect"
+export COMPOSE_ROUTER_HOST="$hostRule"
+
+docker-compose -f docker-compose.prod.yml up -d
