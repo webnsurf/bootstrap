@@ -6,23 +6,29 @@ default:
 
 # DEVELOPMENT SETUP
 .PHONY:
-build-dev: ## Rebuild {{projectName}} with Next.js and build docker containers
+build-dev: ## Build {{projectName}} development docker containers
 	@npm run build-dev
 
 .PHONY:
-run-dev: ## Rebuild {{projectName}} with Next.js and build docker containers
+run-dev: ## Run {{projectName}} development docker containers
 	@npm run run-dev
 
 .PHONY:
-clean-dev: ## Stop and remove {{projectName}} docker containers and images
+clean-dev: ## Stop and remove {{projectName}} development docker containers and images
 	@npm run clean-dev
 
 
 # LOCAL SETUP
 .PHONY:
-build-local: ## Rebuild {{projectName}} with Next.js and build docker containers
+build-local: ## Build {{projectName}} local docker containers
 	@npm run build-local
 	
 .PHONY:
-run-local: ## Rebuild {{projectName}} with Next.js and build docker containers
+run-local: ## Run {{projectName}} local docker containers
 	@npm run run-local
+
+.PHONY:
+clean-local: ## Stop and remove {{projectName}} local docker containers and images
+	@docker kill {{projectName}} && \
+	docker rm {{projectName}} && \
+	docker image rm {{projectName}}:latest || true
