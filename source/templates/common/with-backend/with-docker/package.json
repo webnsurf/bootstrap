@@ -3,9 +3,9 @@
   "scripts": {
     "run-dev": "docker-compose up | sed -En \"s/({{projectName}}-dev_\\s*(FE|BE)\\s*(.*)|(Step| --->|Building|Removing|Creating|Successfully))/\\2 \\3\\4/p\"",
     "build-dev": "docker-compose up -d --build && npm run run-dev",
-    "clean-dev": "docker-compose down && npm run remove-images",
+    "clean-dev": "docker-compose down && docker image rm {{projectName}}-dev-backend {{projectName}}-dev-frontend || true",
     "run-local": "export ENVIRONMENT=local && ./docker/start.sh",
     "build-local": "export ENVIRONMENT=local && ./docker/build.sh backend && ./docker/build.sh frontend && npm run run-local",
-    "remove-images": "docker image rm {{projectName}}-dev-backend {{projectName}}-dev-frontend || true"
+    "clean-local": "docker kill {{projectName}}-backend  {{projectName}}-frontend && docker rm {{projectName}}-backend  {{projectName}}-frontend && docker image rm {{projectName}}-backend:latest  {{projectName}}-frontend:latest || true"
   }
 }

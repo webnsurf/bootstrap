@@ -29,6 +29,4 @@ run-local: ## Run {{projectName}} local docker containers
 
 .PHONY:
 clean-local: ## Stop and remove {{projectName}} local docker containers and images
-	@docker kill {{projectName}} && \
-	docker rm {{projectName}} && \
-	docker image rm {{projectName}}:latest || true
+	@npm run clean-local
