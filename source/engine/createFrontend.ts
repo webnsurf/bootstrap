@@ -12,7 +12,7 @@ export const createFrontend = (
   options: Options,
   destinationPath: string,
 ) => {
-  const { withGit, withDocker, withRouter, withBackend, withLogin, designLibrary } = options;
+  const { withGit, withDocker, withRouter, withLogin, designLibrary } = options;
   fs.ensureDirSync(destinationPath);
 
   const getFolders = () => {
@@ -39,6 +39,10 @@ export const createFrontend = (
 
       if (withRouter) {
         folders.push(path.join(templatesPath, 'with-antd/with-router'));
+      }
+
+      if (withLogin) {
+        folders.push(path.join(templatesPath, 'with-antd/with-login'));
       }
     }
 
