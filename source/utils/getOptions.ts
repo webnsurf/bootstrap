@@ -29,6 +29,7 @@ const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
       '--server-user': String,
       '--server-ip': String,
       '-y': '--yes',
+      '-s': '--set-defaults',
       '-d': '--docker',
       '-p': '--pipeline',
       '-i': '--install',
