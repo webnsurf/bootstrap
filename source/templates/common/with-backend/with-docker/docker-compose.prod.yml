@@ -12,7 +12,6 @@ services:
       traefik.http.routers.{{projectName}}-backend.entrypoints: websecure
       traefik.http.routers.{{projectName}}-backend.tls: true
 
-
   frontend:
     container_name: {{projectName}}-frontend
     image: ${COMPOSE_FRONTEND_IMAGE}

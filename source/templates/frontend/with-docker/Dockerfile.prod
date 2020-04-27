@@ -6,8 +6,8 @@ WORKDIR /www/
 
 RUN npm install
 
-ARG NODE_ENV
-ENV NODE_ENV=$NODE_ENV
+ARG BUILD_ENV
+ENV BUILD_ENV=$BUILD_ENV
 
 RUN npm run build
 

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 
+const { DefinePlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /** @type { () => import('webpack').Configuration } */
@@ -68,6 +69,9 @@ module.exports = env => ({
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../index.html'),
       filename: 'index.html',
+    }),
+    new DefinePlugin({
+      'process.env.BUILD_ENV': JSON.stringify(process.env.BUILD_ENV),
     }),
   ],
 });

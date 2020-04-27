@@ -33,5 +33,5 @@ echo "|-------------------------------------------------------------------------
 
 docker build $projectScope \
   --file "$projectScope/Dockerfile.prod" \
-  --build-arg "NODE_ENV=$environment" \
+  --build-arg "BUILD_ENV=$environment" \
   --tag $image;

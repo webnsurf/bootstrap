@@ -20,7 +20,7 @@ services:
       - /source/node_modules
       - $PWD/backend:/source
     environment:
-      - NODE_ENV=development
+      - BUILD_ENV=development
 
 
   {{projectName}}-dev-frontend:
@@ -46,7 +46,7 @@ services:
       - /source/node_modules
       - $PWD/frontend:/source
     environment:
-      - NODE_ENV=development
+      - BUILD_ENV=development
 
 networks:
   default:

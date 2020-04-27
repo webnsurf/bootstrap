@@ -1,6 +1,7 @@
-export const environment = process.env.NODE_ENV;
+export const environment = process.env.BUILD_ENV;
 
 export const isDevelopment = environment === 'development';
+export const isLocal = environment === 'local';
 export const isProduction = environment === 'production';
 export const isStaging = environment === 'staging';
 

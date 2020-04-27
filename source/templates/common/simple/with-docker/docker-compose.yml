@@ -24,7 +24,7 @@ services:
       - /source/node_modules
       - $PWD:/source
     environment:
-      - NODE_ENV=development
+      - BUILD_ENV=development
 
 networks:
   default:
