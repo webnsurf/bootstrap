@@ -132,8 +132,8 @@ const withDocker = {
     'run-dev': 'docker-compose up | sed -En "s/({{projectName}}-dev\\s*\\|\\s*(.*)|(Step| --->|Building|Removing|Creating|Successfully))/\\2\\3/p"',
     'build-dev': 'docker-compose up -d --build && npm run run-dev',
     'clean-dev': 'docker-compose down && npm run remove-images',
-    'run-local': 'export ENVIRONMENT=local && ./docker/deploy.sh',
-    'build-local': 'export ENVIRONMENT=local && ./docker/build/frontend.sh && npm run run-local',
+    'run-local': 'export ENVIRONMENT=local && ./docker/start.sh',
+    'build-local': 'export ENVIRONMENT=local && ./docker/build.sh && npm run run-local',
     'remove-images': 'docker image rm {{projectName}}-dev || true',
   },
 };
