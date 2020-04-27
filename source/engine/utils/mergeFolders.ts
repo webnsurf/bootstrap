@@ -34,21 +34,24 @@ export const mergeFolders = (
 
       try {
         const { __template, __variables } = JSON.parse(fileContents);
-        const reusableFile = replaceVariables(
-          reusableFiles[__template],
-          __variables,
-        );
 
-        fs.writeFileSync(fullDestinationPath, reusableFile, {
-          mode: fileStat.mode,
-        });
-      } catch (err) {
-        fs.writeFileSync(
-          fullDestinationPath,
-          replaceVariables(fileContents, variables),
-          { mode: fileStat.mode },
-        );
-      }
+        if (__template) {
+          const reusableFile = replaceVariables(
+            reusableFiles[__template],
+            __variables,
+          );
+
+          return fs.writeFileSync(fullDestinationPath, reusableFile, {
+            mode: fileStat.mode,
+          });
+        }
+      } catch {}
+
+      fs.writeFileSync(
+        fullDestinationPath,
+        replaceVariables(fileContents, variables),
+        { mode: fileStat.mode },
+      );
     });
   };
 
