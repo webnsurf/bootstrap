@@ -80,10 +80,12 @@ export const cli = async (args: string[]) => {
     }
 
     printError([
-      '  Something went wrong collecting options',
-      '  Try to reinstall the package and try again',
-      '  You can reinstall the package with the below command:',
-      '      npm i -g @webnsurf/project-bootstrap',
+      'Something went wrong collecting options',
+      'Try to reinstall the package and try again',
+      'You can reinstall the package with the below command:',
+      '    npm i -g @webnsurf/project-bootstrap',
     ]);
+
+    console.error(error);
   }
 };
