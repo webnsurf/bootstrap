@@ -8,7 +8,6 @@
     "build": "tsc && ./syncTemplates.js"
   },
   "bin": {
-    "webnsurf-bootstrap": "bin/bootstrap.js",
     "wns-new": "bin/bootstrap.js"
   },
   "publishConfig": {
