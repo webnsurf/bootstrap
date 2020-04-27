@@ -3,7 +3,7 @@ buildNumber=$BUILD_NUMBER;
 environment=$ENVIRONMENT;
 
 timestamp=$(date +'%Y-%m-%d_%H.%M.%S')
-projectName="effectas"
+projectName="{{projectName}}"
 
 if [ "$buildNumber" = "" ]; then
   [ "$1" = "" ] && buildNumber="latest" || buildNumber=$1;
