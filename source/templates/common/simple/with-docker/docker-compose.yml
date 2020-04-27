@@ -12,11 +12,11 @@ services:
       - 4000
     labels:
       traefik.enable: true
-      traefik.http.routers.{{projectName}}-dev-redirect.rule: Host(`dev.webnsurf.com`)
+      traefik.http.routers.{{projectName}}-dev-redirect.rule: Host(`dev.{{domain}}`)
       traefik.http.routers.{{projectName}}-dev-redirect.entrypoints: web
       traefik.http.routers.{{projectName}}-dev-redirect.middlewares: https-redirect@file
 
-      traefik.http.routers.{{projectName}}-dev.rule: Host(`dev.webnsurf.com`)
+      traefik.http.routers.{{projectName}}-dev.rule: Host(`dev.{{domain}}`)
       traefik.http.routers.{{projectName}}-dev.entrypoints: websecure
       traefik.http.routers.{{projectName}}-dev.tls: true
     volumes:

@@ -14,10 +14,10 @@ if [ "$environment" = "" ]; then
 fi;
 
 if [ "$environment" = "production" ]; then
-  hostRule="Host(\`webnsurf.com\`) || Host(\`www.webnsurf.com\`)"
+  hostRule="Host(\`{{domain}}\`) || Host(\`www.{{domain}}\`)"
   redirect="full-strip-slash@file, full-redirect@file"
 else
-  hostRule="Host(\`$environment.webnsurf.com\`)"
+  hostRule="Host(\`$environment.{{domain}}\`)"
   redirect="https-strip-slash@file, https-redirect@file"
 fi;
 

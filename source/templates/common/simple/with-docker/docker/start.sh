@@ -14,9 +14,9 @@ if [ "$environment" = "" ]; then
 fi;
 
 if [ "$environment" = "production" ]; then
-  hostRule="Host(\`webnsurf.com\`)"
+  hostRule="Host(\`{{domain}}\`)"
 else
-  hostRule="Host(\`$environment.webnsurf.com\`)"
+  hostRule="Host(\`$environment.{{domain}}\`)"
 fi;
 
 frontendImage="$projectName:$buildNumber"

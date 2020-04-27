@@ -40,7 +40,7 @@ module.exports = {
     historyApiFallback: true,
     host: '0.0.0.0',
     disableHostCheck: true,
-    public: 'dev.webnsurf.com',
+    public: 'dev.{{domain}}',
     proxy: {
       '/api': 'http://localhost:3000',
     },
