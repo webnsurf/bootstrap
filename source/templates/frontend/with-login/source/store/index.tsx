@@ -1,6 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 
-import { isDevelopment } from 'environment';
+import { isProduction } from 'environment';
 
 import { userReducer } from './user';
 import { AppState, AppActionTypes } from './types';
@@ -16,5 +16,7 @@ const rootReducer = combineReducers<AppState, AppActionTypes>({
 export const store = createStore(
   rootReducer,
   {},
-  isDevelopment && reduxDevtoolsExtension(),
+  !isProduction && reduxDevtoolsExtension
+    ? reduxDevtoolsExtension()
+    : undefined,
 );
