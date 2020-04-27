@@ -14,9 +14,11 @@ if [ "$environment" = "" ]; then
 fi;
 
 if [ "$environment" = "production" ]; then
-  hostRule="Host(\`{{domain}}\`)"
+  hostRule="Host(\`{{domain}}\`) || Host(\`www.{{domain}}\`)"
+  redirect="full-strip-slash@file, full-redirect@file"
 else
   hostRule="Host(\`$environment.{{domain}}\`)"
+  redirect="https-strip-slash@file, https-redirect@file"
 fi;
 
 frontendImage="$projectName:$buildNumber"
@@ -28,10 +30,12 @@ echo "  Time------------------------| $timestamp"
 echo "  Environment:----------------| $environment"
 echo "  Docker Image name:----------| $frontendImage"
 echo "  Host Rule:------------------| $hostRule"
+echo "  Redirect:-------------------| $redirect"
 echo "|-----------------------------------------------------------------------------------------|"
 echo "|-----------------------------------------------------------------------------------------|\\n"
 
 export COMPOSE_FRONTEND_IMAGE="$frontendImage"
+export COMPOSE_REDIRECT_STRATEGY="$redirect"
 export COMPOSE_ROUTER_HOST="$hostRule"
 
 docker-compose -f docker-compose.prod.yml up -d
