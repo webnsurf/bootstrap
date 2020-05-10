@@ -1,6 +1,19 @@
 # CLI to bootstrap React projects with TypeScript
 
-A CLI to bootstrap React Applications ranging in complexity from the very simple to more complex setups with CI:
+A CLI to bootstrap React Applications ranging in complexity from the very simple to more complex setups with CI.
+
+To install run
+```bash
+npm i -g @webnsurf/bootstrap
+```
+This will install the package globally and make `wns-new` command available anywhere on your machine. You can also install it locally and then use it with [NPX](https://www.npmjs.com/package/npx)
+
+To create a new project run
+  ```bash
+  wns-new <project_name> [arguments]
+  ```
+If no `project_name` is provided the current working directory is used. Each project can be configured with:
+
   - Frontend setup
     - [React](https://reactjs.org/)
     - [TypeScript](https://www.typescriptlang.org/)
@@ -23,9 +36,7 @@ A CLI to bootstrap React Applications ranging in complexity from the very simple
     - Deployments to staging & production environments
     - For best implementation experience we suggest checking out [Web'n'surF CI server](https://github.com/webnsurf/jenkins) based on [Jenkins](https://www.jenkins.io/)
 
-To create a new project run `wns-new <project_name> ...arguments`:
-  - If no `project_name` is provided the current working directory is used
-  - The CLI is interactive - specifying the below options as arguments is not required
+The CLI is interactive so specifying the below options as arguments is not required. 
 
 ## Arguments:
 | Name | Alias | Action | Default value | Info |
