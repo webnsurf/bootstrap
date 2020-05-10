@@ -36,7 +36,7 @@ If no `project_name` is provided the current working directory is used. Each pro
     - Deployments to staging & production environments
     - For best implementation experience we suggest checking out [Web'n'surF CI server](https://github.com/webnsurf/jenkins) based on [Jenkins](https://www.jenkins.io/)
 
-The CLI is interactive so specifying the below options as arguments is not required. 
+The CLI is interactive so specifying the below arguments when running the command is not required.
 
 ## Arguments:
 | Name | Alias | Action | Default value | Info |
