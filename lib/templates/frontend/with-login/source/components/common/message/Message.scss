@@ -1,0 +1,41 @@
+@import '../../../variables';
+
+.message {
+  transition-property: height;
+  transition-duration: 200ms;
+  text-align: left;
+  overflow: hidden;
+
+  .message-body {
+    border-radius: 3px;
+    padding: 10px;
+  }
+
+  &.error {
+    color: #333;
+
+    .message-body {
+      background-color: $errorBackground;
+      border: 1px solid lighten($error, 30);
+    }
+  }
+
+  &.success {
+    color: #333;
+
+    .message-body {
+      background-color: $successBackground;
+      border: 1px solid lighten($success, 10);
+    }
+  }
+
+  &.simple {
+    &.error {
+      color: $error;
+    }
+
+    &.success {
+      color: $success;
+    }
+  }
+}

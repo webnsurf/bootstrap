@@ -1,0 +1,23 @@
+version: '3.5'
+
+services:
+  frontend:
+    container_name: {{projectName}}
+    image: ${COMPOSE_FRONTEND_IMAGE}
+    ports:
+      - 80
+    labels:
+      traefik.enable: true
+      traefik.http.routers.{{projectName}}-redirect.rule: ${COMPOSE_ROUTER_HOST}
+      traefik.http.routers.{{projectName}}-redirect.middlewares: ${COMPOSE_REDIRECT_STRATEGY}
+      traefik.http.routers.{{projectName}}-redirect.entrypoints: web
+
+      traefik.http.routers.{{projectName}}.rule: ${COMPOSE_ROUTER_HOST}
+      traefik.http.routers.{{projectName}}.middlewares: ${COMPOSE_REDIRECT_STRATEGY}
+      traefik.http.routers.{{projectName}}.entrypoints: websecure
+      traefik.http.routers.{{projectName}}.tls: true
+
+networks:
+  default:
+    external:
+      name: webnsurf_network

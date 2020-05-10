@@ -1,0 +1,54 @@
+version: '3.5'
+
+services:
+  {{projectName}}-dev-backend:
+    container_name: {{projectName}}-dev_BE
+    build:
+      context: backend
+      dockerfile: Dockerfile.dev
+    tty: true
+    image: {{projectName}}-dev-backend:latest
+    ports:
+      - 3000
+    labels:
+      traefik.enable: true
+      traefik.http.routers.{{projectName}}-dev-backend.rule: Host(`dev.{{domain}}`) && PathPrefix(`/api`)
+      traefik.http.routers.{{projectName}}-dev-backend.entrypoints: websecure
+      traefik.http.routers.{{projectName}}-dev-backend.tls: true
+    volumes:
+      - /source/dist
+      - /source/node_modules
+      - $PWD/backend:/source
+    environment:
+      - BUILD_ENV=development
+
+
+  {{projectName}}-dev-frontend:
+    container_name: {{projectName}}-dev_FE
+    build:
+      context: frontend
+      dockerfile: Dockerfile.dev
+    tty: true
+    image: {{projectName}}-dev-frontend:latest
+    ports:
+      - 4000
+    labels:
+      traefik.enable: true
+      traefik.http.routers.{{projectName}}-dev-redirect.rule: Host(`dev.{{domain}}`)
+      traefik.http.routers.{{projectName}}-dev-redirect.entrypoints: web
+      traefik.http.routers.{{projectName}}-dev-redirect.middlewares: https-redirect@file
+
+      traefik.http.routers.{{projectName}}-dev-frontend.rule: Host(`dev.{{domain}}`)
+      traefik.http.routers.{{projectName}}-dev-frontend.entrypoints: websecure
+      traefik.http.routers.{{projectName}}-dev-frontend.tls: true
+    volumes:
+      - /source/dist
+      - /source/node_modules
+      - $PWD/frontend:/source
+    environment:
+      - BUILD_ENV=development
+
+networks:
+  default:
+    external:
+      name: webnsurf_network
