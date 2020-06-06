@@ -13,7 +13,6 @@ export const createFrontend = (
   destinationPath: string,
 ) => {
   const { withGit, withDocker, withRouter, withLogin, designLibrary } = options;
-  fs.ensureDirSync(destinationPath);
 
   const getFolders = () => {
     const folders = [path.join(templatesPath, 'common')];
@@ -48,6 +47,8 @@ export const createFrontend = (
 
     return folders;
   };
+
+  fs.ensureDirSync(destinationPath);
 
   mergeFolders(
     getFolders(),
