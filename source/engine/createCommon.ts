@@ -4,7 +4,6 @@ import path from 'path';
 import fs from 'fs-extra';
 
 import { Options } from '../types';
-
 import { mergeFolders } from './utils';
 
 export const createCommon = (
@@ -42,6 +41,10 @@ export const createCommon = (
     destinationPath,
     options,
   );
+
+  if (options.withGit) {
+    fs.writeFileSync(path.join(destinationPath, '.gitignore'), 'node_modules/\ndist/\n');
+  }
 
   exec('make --version', err => {
     if (err) {

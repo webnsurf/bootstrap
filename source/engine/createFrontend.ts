@@ -3,7 +3,6 @@ import path from 'path';
 import fs from 'fs-extra';
 
 import { Options } from '../types';
-
 import { getFrontendPackage, mergeFolders } from './utils';
 
 const templatesPath = path.join(__dirname, '../templates/frontend');
@@ -12,14 +11,10 @@ export const createFrontend = (
   options: Options,
   destinationPath: string,
 ) => {
-  const { withGit, withDocker, withRouter, withLogin, designLibrary } = options;
+  const { withDocker, withRouter, withLogin, designLibrary } = options;
 
   const getFolders = () => {
     const folders = [path.join(templatesPath, 'common')];
-
-    if (withGit) {
-      folders.push(path.join(templatesPath, 'with-git'));
-    }
 
     if (withDocker) {
       folders.push(path.join(templatesPath, 'with-docker'));
