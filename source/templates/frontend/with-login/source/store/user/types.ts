@@ -56,7 +56,6 @@ interface AfterLogourAction extends Action {
   type: typeof AFTER_LOGOUT;
 }
 
-
 export interface BaseUserActions {
   beforeAuthenticate(): BeforeAuthenticateAction;
   afterAuthenticate(user: User): AfterAuthenticateAction;
@@ -67,6 +66,6 @@ export interface BaseUserActions {
 export type UserReducer = Reducer<UserState, AppActionTypes>;
 
 export type UserActionTypes = BeforeAuthenticateAction
-    | AfterAuthenticateAction
-    | AfterAuthenticateErrorAction
-    | AfterLogourAction;
+  | AfterAuthenticateAction
+  | AfterAuthenticateErrorAction
+  | AfterLogourAction;

@@ -9,7 +9,6 @@ import { AUTH_TOKEN_KEY, LAST_URL_KEY } from 'environment';
 
 import { UserActions, BaseUserActions } from './types';
 
-
 export const BEFORE_AUTHENTICATE = 'BEFORE_AUTHENTICATE';
 export const AFTER_AUTHENTICATE = 'AFTER_AUTHENTICATE';
 export const AFTER_AUTHENTICATE_ERROR = 'AFTER_AUTHENTICATE_ERROR';
