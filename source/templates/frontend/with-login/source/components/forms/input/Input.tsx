@@ -30,6 +30,8 @@ const InputRenderer: FC<InputRendererProps> = ({
 
       <input
         id={ randomId }
+        placeholder={ placeholder }
+        { ...input }
         onChange={ event => {
           if (onChange) {
             onChange(event.target.value);
@@ -37,8 +39,6 @@ const InputRenderer: FC<InputRendererProps> = ({
 
           input.onChange(event);
         } }
-        placeholder={ placeholder }
-        { ...input }
       />
 
       <Message
