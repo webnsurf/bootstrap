@@ -26,13 +26,13 @@ usersRouter.get('/authenticate', async (req, res) => {
         const user = findUserByID(decoded.userID);
 
         if (user) {
-          delete user.password;
+          const { password, ...rest } = user;
 
           return res.cookie(
             AUTH_TOKEN_KEY,
             signUserToken(user.userID),
             AUTH_COOKIE_OPTIONS,
-          ).json(user);
+          ).json(rest);
         }
       }
     } catch { }
