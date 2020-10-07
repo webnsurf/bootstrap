@@ -94,8 +94,10 @@ export const getBackendPackage = (options: Options) => {
     };
   }
 
-  return replaceVariables(
+  const withVars = replaceVariables(
     sortPackage(JSON.stringify(packageObject, null, 2)),
     options,
   );
+
+  return `${withVars}\n`;
 };
