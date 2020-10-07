@@ -19,7 +19,6 @@ export const MainPage: FC/* {{props}} */ = () => {
         <div>{ word }</div>
       </div>
 
-
       <Modal
         className="main-page-modal"
         renderActions={ modal => (
