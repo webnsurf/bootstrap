@@ -1,0 +1,14 @@
+{
+  "withBackend": true,
+  "withGit": true,
+  "withRouter": true,
+  "withLogin": true,
+  "withDocker": true,
+  "withPipeline": true,
+  "withInstall": false,
+  "domain": "mailer.webnsurf.com",
+  "devDomain": "mailer.dev.webnsurf.com",
+  "designLibrary": null,
+  "serverUsername": "laurynas",
+  "serverIp": "141.136.44.124"
+}

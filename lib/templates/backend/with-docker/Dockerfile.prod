@@ -1,4 +1,4 @@
-FROM node:12.16.0-alpine as build
+FROM node:12.18.4-alpine as build
 
 COPY . /www-source/
 WORKDIR /www-source/
@@ -7,7 +7,7 @@ RUN npm install && npm run build
 
 COPY package*.json /www-source/dist/
 
-FROM node:12.16.0-alpine
+FROM node:12.18.4-alpine
 
 RUN mkdir -p /www/
 
