@@ -18,7 +18,10 @@ pipeline {
                 expression { env.ENVIRONMENT == 'staging' }
             }
             steps {
-                sh 'docker/start.sh'
+                sh 'rm -r {{projectName}} || true && mkdir {{projectName}}'
+                sh 'cp docker/start.sh {{projectName}}/'
+                sh 'cp docker-compose.prod.yml {{projectName}}/'
+                sh 'cd {{projectName}} && ./start.sh'
             }
         }
 
