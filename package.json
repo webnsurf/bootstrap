@@ -1,6 +1,6 @@
 {
   "name": "@webnsurf/bootstrap",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "CLI to bootstrap React projects (including backend) using TypeScript",
   "scripts": {
     "start": "tsc --watch & node syncTemplates.js --watch",
