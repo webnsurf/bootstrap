@@ -32,6 +32,7 @@ export interface InitialOptions {
 
 export interface DomainOptions {
   domain: string;
+  devDomain: string;
 }
 
 export interface ServerOptions {

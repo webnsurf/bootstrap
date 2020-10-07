@@ -11,6 +11,18 @@ const sanitizeProjectName = (rawName: string) => (
   rawName.toLowerCase().replace(/\s+/g, '-')
 );
 
+const getDomainOptions = (domain = 'webnsurf.com'): DomainOptions => {
+  const domainParts = domain.split('.');
+  return {
+    domain,
+    devDomain: [
+      ...domainParts.slice(0, domainParts.length - 2),
+      'dev',
+      ...domainParts.slice(domainParts.length - 2),
+    ].join('.'),
+  };
+};
+
 const savedOptionsPath = path.join(__dirname, 'options.json');
 
 const getInitialArguments = (rawArgs: RawArgs): InitialArguments => {
@@ -109,9 +121,7 @@ const prompt = async ({
     try { return fs.readJSONSync(savedOptionsPath); } catch { }
   })();
 
-  const domainOptions: DomainOptions = {
-    domain: domain || 'webnsurf.com',
-  };
+  const domainOptions = getDomainOptions(domain);
 
   const serverOptions: ServerOptions = {
     serverUsername: serverUsername || '<SERVER_USERNAME>',
@@ -217,15 +227,17 @@ const prompt = async ({
   }
 
   const initialAnswers = await inquirer.prompt<InitialOptions>(questions);
-  const domainAnswers = await (() => {
+  const domainAnswers = await (async () => {
     if (withDocker || initialAnswers.withDocker) {
       if (!domain) {
-        return inquirer.prompt<DomainOptions>([{
+        const mainDomainAnswer = await inquirer.prompt<DomainOptions>([{
           type: 'input',
           name: 'domain',
           message: 'Enter the domain name to use',
           default: domainOptions.domain,
         }]);
+
+        return getDomainOptions(mainDomainAnswer.domain);
       }
     }
 
@@ -282,6 +294,7 @@ const prompt = async ({
       withPipeline: options.withPipeline,
       withInstall: options.withInstall,
       domain: options.domain,
+      devDomain: options.devDomain,
       designLibrary: options.designLibrary,
       serverUsername: options.serverUsername,
       serverIp: options.serverIp,
